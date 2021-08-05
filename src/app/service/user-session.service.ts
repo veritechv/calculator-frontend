@@ -15,9 +15,8 @@ export class UserSessionService {
     this.loggedUser$ = new Subject<User>();
   }
 
-  public setLoggedUser(user:User, token:string){
-    this.loggedUser = user;
-    this.setToken(token);
+  public setLoggedUser(user:User){
+    this.loggedUser = user;    
     this.loggedUser$.next(this.loggedUser);
   }
 

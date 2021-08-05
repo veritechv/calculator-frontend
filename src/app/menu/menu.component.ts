@@ -27,12 +27,8 @@ export class MenuComponent implements OnInit {
     }
 
     this.userSessionService.getLoggedUser$().subscribe(user=>{
-      console.log('getting notified');
       this.loggedUser = user;
       this.isLogged = true;
-      console.log('before calling checkThisOut()');
-      this.checkThisOut();      
-      console.log('Menu is logged?:'+this.isLogged);
     });
   }
   
@@ -42,12 +38,6 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["/login"]);
   }
 
-  public checkThisOut():boolean{
-    this.isLogged = true;
-    console.log('changed to true from checkThisOut');
-    return this.isLogged;
-    
-  }
 
   public isUserAdmin():boolean{
     return this.loggedUser && this.loggedUser.isAdmin();

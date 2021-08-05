@@ -1,2 +1,22 @@
 <app-menu></app-menu>
-<p>services works!</p>
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">UUID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-stripped">
+          <tr *ngFor="let service of services">
+            <td>{{service.uuid}}</td>
+            <td>{{service.name}}</td>
+            <td>{{service.cost}}</td>
+            <td>{{service.status}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/user';
 import { UserSessionService } from '../service/user-session.service';
+import { UsersService } from '../service/users.service';
 
 @Component({
   selector: 'app-home',
@@ -11,18 +12,16 @@ export class HomeComponent implements OnInit {
   loggedUser:User | null = null;;
   isLogged:boolean;
 
-  constructor(private userSessionService:UserSessionService) { }
+  constructor(private userSessionService:UserSessionService, 
+    private usersService:UsersService) { }
 
   ngOnInit(): void {
+    this.loggedUser = this.userSessionService.getLoggedUser();
     this.isLogged = this.userSessionService.isLogged();
-    if(this.isLogged){
-      this.loggedUser = this.userSessionService.getLoggedUser();
-    }
 
     this.userSessionService.getLoggedUser$().subscribe(user=>{
       this.loggedUser = user;
       this.isLogged = true;
     });
   }
-
 }

@@ -11,11 +11,11 @@
                 <i class="fas fa-home"></i>Home</a>
           </li>
 
-          <li class="nav-item">
+          <li *ngIf="isLogged" class="nav-item">
             <a class="nav-link active" routerLink="/services"><i class="fas fa-calculator"></i> Operations</a>
           </li>
 
-          <li class="nav-item">
+          <li *ngIf="isLogged" class="nav-item">
             <a class="nav-link active" routerLink="/records">
                 <i class="fas fa-list"></i> My Records</a>
           </li>
@@ -40,7 +40,7 @@
           <ul class="navbar-nav ml-auto" *ngIf="isLogged">
             <li class="nav-item disabled">
                 <a class="nav-link">
-                    {{loggedUser.username}} - Your balance {{loggedUser.balance}}
+                    {{loggedUser.username}} - Balance [{{loggedUser.balance}}]
                 </a>
             </li>
             

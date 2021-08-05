@@ -1,2 +1,7 @@
 <app-menu></app-menu>
-<p>home works!</p>
+<div class="container">
+    <div class="bg-light p-5 rounded-lg m-3">
+        <h1 class="display-4" *ngIf="!isLogged">Hello, please login to access</h1>
+        <h1 class="display-4" *ngIf="isLogged">Welcome {{loggedUser.username}}!</h1>        
+      </div>
+</div>
