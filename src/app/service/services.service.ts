@@ -1,10 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Service } from '../model/service';
 import { AppsettingsService } from './appsettings.service';
+import { URLSearchParams } from 'url';
 
-const headers= {headers: new HttpHeaders({'Content-Type':'application/json'})};
+
+const headers = new HttpHeaders().set('Content-Type', 'application/json');
 const endpoint = '/services';
 
 @Injectable({
@@ -19,11 +21,19 @@ export class ServicesService {
     this.apiVersion = appSettingsService.getApiVersion();
   }
 
-  public services():Observable<Service[]>{
-    return this.httpClient.get<Service[]>(this.buildUrl()+'/list', headers);
+  public services(pageIndex:number, pageSize:number, sortingField:string):Observable<Service[]>{        
+    //for some reason HttpParamsOptions is not found, building params by hand
+    const httpParams:HttpParams = new HttpParams().
+    append('pageIndex', pageIndex+'').
+    append('pageSize', pageSize+'').
+    append('sortBy', sortingField);
+
+    const options = { params: httpParams, headers: headers };
+
+    return this.httpClient.get<Service[]>(this.buildUrl()+'/list', options);
   }
 
-  private buildUrl():string{
-    return this.apiBaseUrl+endpoint;
+  private buildUrl():string{    
+    return  this.apiBaseUrl+endpoint;    
   }
 }

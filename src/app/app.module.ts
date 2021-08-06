@@ -1,21 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http' 
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+
+import { LoginComponent } from './components/login/login.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HomeComponent } from './components/home/home.component';
+import { OperationsComponent } from './components/operations/operations.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { AppsettingsService } from './service/appsettings.service';
 
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { LoginComponent } from './login/login.component';
-import { MenuComponent } from './menu/menu.component';
-import { HomeComponent } from './home/home.component';
-import { OperationsComponent } from './operations/operations.component';
-
-import { HttpClientModule } from '@angular/common/http' 
 import { requestInterceptor } from './interceptor/request.interceptor';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { OperationDetailsComponent } from './components/operation-details/operation-details.component';
+
 
 @NgModule({
   declarations: [
@@ -24,13 +30,18 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     MenuComponent,
     HomeComponent,
     OperationsComponent,
-    SignUpComponent
+    SignUpComponent,
+    OperationDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatDialogModule
   ],
   providers: [requestInterceptor,
     {

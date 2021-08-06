@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { User } from '../model/user';
-import { UserSessionService } from '../service/user-session.service';
+import { User } from '../../model/user';
+import { UserSessionService } from '../../service/user-session.service';
 
 @Component({
   selector: 'app-menu',

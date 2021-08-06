@@ -28,13 +28,13 @@ export class UsersService {
   public findUser(username:string):Observable<User>{
     // Setup log namespace query parameter
     let params = new HttpParams().set('username', username);
-    return this.httpClient.get<User>(this.buildSearchUserUrl()+'/?username='+username, headers);
+    return this.httpClient.get<User>(this.buildSearchUserUrl()+'/'+username, headers);
   }
   private buildUrl():string{
-    return this.apiBaseUrl+baseEndpoint+listEndpoint;
+    return this.apiBaseUrl+baseEndpoint;
   }
 
   private buildSearchUserUrl(){
-    return this.apiBaseUrl+baseEndpoint+searchUserEndPoint;
+    return this.apiBaseUrl+baseEndpoint;
   }
 }

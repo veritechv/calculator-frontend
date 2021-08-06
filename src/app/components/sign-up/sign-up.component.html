@@ -1,0 +1,76 @@
+<app-menu></app-menu>
+<form no-validate #f="ngForm" (ngSubmit)="f.form.valid && signUp()">
+    <div class="container">
+        <div class="row m-3">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header text-center">
+                        Please enter the following information
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="firstName">Email</label>
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" 
+                            [ngClass]="{ 'is-invalid': f.submitted && username.invalid }"  required />
+                            <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+                                <div *ngIf="username.errors.required">First Name is required</div>
+                            </div>
+                        </div>
+<!--
+                        <div class="input-group mb-3" ngClass="{
+                             'is-invalid': username.invalid && (username.dirty || username.touched),
+                             'is-valid': username.valid && (username.dirty || username.touched)}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="email" class="form-control" name="username"
+                                 placeholder="email, eg:user@calculator.com" 
+                                 aria-label="Username" aria-describedby="basic-addon1"  
+                                 [(ngModel)]="model.username" required pattern="[^ @]*@[^ @]*" #username="ngModel">
+                        </div>
+                    -->
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" name="password"
+                                 placeholder="Password" 
+                                 aria-label="Username" aria-describedby="basic-addon1"  
+                                 [(ngModel)]="model.password" required minlength="8" #password="ngModel">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" name="passwordCheck"
+                                 placeholder="Verify password" 
+                                 aria-label="Username" aria-describedby="basic-addon1"  
+                                 [(ngModel)]="model.passwordCheck" required minlength="8" #passwordCheck="ngModel">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="card-body text-center">
+                                <button type="submit" class="btn btn-success btn-lg" [disabled]="f.invalid">
+                                    Sign Up
+                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
+                        <p *ngIf="username.errors.required">Email is required</p>
+                        <p *ngIf="username.errors.email">Email must contain at least the @ character</p>
+                    </div>
+                    <p class="form=control=feedback" *ngIf="successfulSignUp()"> {{successMessage}}</p>
+                    <p class="form=control=feedback" *ngIf="errorHappened()"> {{errorMessage}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
