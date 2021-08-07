@@ -5,7 +5,7 @@ import { User } from '../../model/user';
 import { ServicesService } from '../../service/services.service';
 import { UserSessionService } from '../../service/user-session.service';
 import { MatDialog } from '@angular/material/dialog';
-import { OperationDetailsComponent } from '../operation-details/operation-details.component';
+import { OperationDetailsDialogComponent } from '../operation-details-dialog/operation-details-dialog.component';
 
 class PagingInfo
 {
@@ -70,7 +70,8 @@ export class OperationsComponent implements OnInit {
   }
 
   public showDetails(service:Service):void{
-    let detailsDialog = this.dialog.open(OperationDetailsComponent, {'data':{'service':service}});
+    //let detailsDialog = this.dialog.open(OperationDetailsDialogComponent, {'data':{'service':service, 'isEdit':false, 'isAdmin':false}});
+    let detailsDialog = this.dialog.open(OperationDetailsDialogComponent, {'data':{'service':service, 'isEdit':true, 'isAdmin':true}});
     detailsDialog.afterClosed().subscribe(result=>{
       console.log(`this is the result ${result}`);      
     });

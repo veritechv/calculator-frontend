@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Service } from '../model/service';
 import { AppsettingsService } from './appsettings.service';
-import { URLSearchParams } from 'url';
 
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -31,6 +30,10 @@ export class ServicesService {
     const options = { params: httpParams, headers: headers };
 
     return this.httpClient.get<Service[]>(this.buildUrl()+'/list', options);
+  }
+
+  public update(service:Service):Observable<Service>{
+    return this.httpClient.put<Service>(this.buildUrl(),service);
   }
 
   private buildUrl():string{    

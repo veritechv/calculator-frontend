@@ -20,7 +20,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
-import { OperationDetailsComponent } from './components/operation-details/operation-details.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OperationDetailsDialogComponent } from './components/operation-details-dialog/operation-details-dialog.component';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { OperationDetailsComponent } from './components/operation-details/operat
     HomeComponent,
     OperationsComponent,
     SignUpComponent,
-    OperationDetailsComponent
+    OperationDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ import { OperationDetailsComponent } from './components/operation-details/operat
     FormsModule,
     BrowserAnimationsModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [requestInterceptor,
     {

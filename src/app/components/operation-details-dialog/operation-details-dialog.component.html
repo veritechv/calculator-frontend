@@ -1,0 +1,39 @@
+<div class="container-lg">
+<h2 mat-dialog-title>Service details {{data.service['name']}}</h2>
+<!--mat-dialog-content-->    
+    <form novalidate #f="ngForm" (ngSubmit)="submit()">
+        
+            <!-- uuid -->
+            <div class="mb-3">
+                <label class="form-label">UUID</label>
+                <input class="form-control" type="text" name="uuid" [ngModel]="service.uuid" disabled readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input class="form-control" type="text" name="name" [ngModel]="service.name" disabled readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Execution cost</label>
+                <input class="form-control" type="text" name="cost" [ngModel]="service.cost" 
+                    required minlength="1" maxlength="3" pattern="/^\d+/" [attr.disabled]="isEdit && isAdmin">
+            </div>
+            
+            <div class="mb-3 form-check form-switch">
+                <label class="form-check-label">Active</label>
+                <input class="form-check-input" type="checkbox" name="active" [(ngModel)]="service.status" [attr.disabled]="isEdit && isAdmin">
+            </div>
+                
+            <!-- Submit -->
+            <div *ngIf="isEdit && isAdmin" class="button-wrapper">
+                <button type="submit" color="primary">Update</button>
+            </div>
+
+  
+      </form>
+<!--/mat-dialog-content-->
+</div>
+<div class="text-center">
+    <mat-dialog-actions>
+        <button class="btn btn-primary" mat-button mat-dialog-close>Ok</button>
+    </mat-dialog-actions>
+</div>

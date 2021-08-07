@@ -1,13 +1,9 @@
-export class Service {
-    uuid:string;
-    name:string;
-    status:string;
-    cost:number;
+const ACTIVE_STATUS:string="ACTIVE";
 
-    constructor(uuid:string, name:string, status:string, cost:number){
-        this.uuid=uuid;
-        this.name=name;
-        this.status=status;
-        this.cost=cost;
+export class Service {
+    constructor(public uuid:string = '', public name:string = '', public status:string = '', public cost:number = 0){ }    
+
+    public isActive():boolean{
+        return status!=null && this.status === ACTIVE_STATUS;
     }
 }
