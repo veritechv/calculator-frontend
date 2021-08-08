@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { NavigationGuard } from './guards/navigation.guard';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { OperationsComponent } from './components/operations/operations.component';
+import { ServicesComponent } from './components/calculator-services/services.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
   {path:'login', component: LoginComponent},
-  {path:'services', component: OperationsComponent, canActivate:[NavigationGuard]},
+  {path:'services', component: ServicesComponent, canActivate:[NavigationGuard]},
   {path:'signup', component: SignUpComponent},
   {path:'**', redirectTo: '', pathMatch: 'full'}
 

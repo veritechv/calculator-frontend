@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http' 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { OperationsComponent } from './components/operations/operations.component';
+import { ServicesComponent } from './components/calculator-services/services.component';
 import { APP_INITIALIZER } from '@angular/core';
 import { AppsettingsService } from './service/appsettings.service';
 
@@ -21,7 +21,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { OperationDetailsDialogComponent } from './components/operation-details-dialog/operation-details-dialog.component';
+import { ServiceDetailsDialogComponent } from './components/service-details-dialog/service-details-dialog.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { InformationDialogComponent } from './components/information-dialog/information-dialog.component';
+import { CreateServiceDialogComponent } from './components/create-service-dialog/create-service-dialog.component';
 
 
 @NgModule({
@@ -30,9 +33,13 @@ import { OperationDetailsDialogComponent } from './components/operation-details-
     LoginComponent,
     MenuComponent,
     HomeComponent,
-    OperationsComponent,
+    ServicesComponent,
     SignUpComponent,
-    OperationDetailsDialogComponent
+    ServiceDetailsDialogComponent,
+    ConfirmationDialogComponent,
+    InformationDialogComponent,
+    CreateServiceDialogComponent
+
   ],
   imports: [
     BrowserModule,
@@ -43,7 +50,8 @@ import { OperationDetailsDialogComponent } from './components/operation-details-
     BrowserAnimationsModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [requestInterceptor,
     {

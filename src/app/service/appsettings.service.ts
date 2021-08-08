@@ -26,17 +26,15 @@ export class AppsettingsService {
   }
 
   public getApiVersion(){
-    /*if (!this.appConfig) {
-      throw Error('Config file not loaded!');
-    }*/
     return this.appConfig.apiVersion;
   }
 
   public getApiBaseUrl(){
-    /*if (!this.appConfig) {
-      throw Error('Config file not loaded!');
-    }*/
     return this.appConfig.apiBaseUrl;
+  }
+
+  public getServiceStatusList():string[]{
+    return this.appConfig.serviceStatus;
   }
 
 }

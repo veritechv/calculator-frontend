@@ -3,15 +3,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Service } from 'src/app/model/service';
 import { ServicesService } from 'src/app/service/services.service';
 import { ViewChild } from '@angular/core';
-import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
-  selector: 'app-operation-details',
-  templateUrl: './operation-details-dialog.component.html',
-  styleUrls: ['./operation-details-dialog.component.css']
+  selector: 'app-service-details',
+  templateUrl: './service-details-dialog.component.html',
+  styleUrls: ['./service-details-dialog.component.css']
 })
-export class OperationDetailsDialogComponent implements OnInit {
+export class ServiceDetailsDialogComponent implements OnInit {
   service:Service = null;
   isEdit:boolean = false;
   isAdmin:boolean = false;

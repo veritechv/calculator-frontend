@@ -13,14 +13,25 @@
                 <input class="form-control" type="text" name="name" [ngModel]="service.name" disabled readonly>
             </div>
             <div class="mb-3">
-                <label class="form-label">Execution cost</label>
-                <input class="form-control" type="text" name="cost" [ngModel]="service.cost" 
-                    required minlength="1" maxlength="3" pattern="/^\d+/" [attr.disabled]="isEdit && isAdmin">
+                <label class="form-label">Description</label>
+                <input class="form-control" type="text" name="description" [ngModel]="service.description" disabled readonly>
             </div>
-            
+            <div class="mb-3">
+                <label class="form-label">Type</label>
+                <input class="form-control" type="text" name="type" [ngModel]="service.type" disabled readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Execution cost</label>
+                <input class="form-control" type="text" name="cost" [(ngModel)]="service.cost" 
+                    required minlength="1" maxlength="3" pattern="/^\d+/" >
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Number of parameters needed for execution</label>
+                <input class="form-control" type="text" name="numParameters" [ngModel]="service.numParameters" disabled readonly>
+            </div>            
             <div class="mb-3 form-check form-switch">
                 <label class="form-check-label">Active</label>
-                <input class="form-check-input" type="checkbox" name="active" [(ngModel)]="service.status" [attr.disabled]="isEdit && isAdmin">
+                <input class="form-check-input" type="checkbox" name="active" [(ngModel)]="service.status" >
             </div>
                 
             <!-- Submit -->

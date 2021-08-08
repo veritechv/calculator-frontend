@@ -5,7 +5,10 @@ import { User } from '../../model/user';
 import { ServicesService } from '../../service/services.service';
 import { UserSessionService } from '../../service/user-session.service';
 import { MatDialog } from '@angular/material/dialog';
-import { OperationDetailsDialogComponent } from '../operation-details-dialog/operation-details-dialog.component';
+import { ServiceDetailsDialogComponent } from '../service-details-dialog/service-details-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
+import { CreateServiceDialogComponent } from '../create-service-dialog/create-service-dialog.component';
 
 class PagingInfo
 {
@@ -17,11 +20,11 @@ class PagingInfo
 
 
 @Component({
-  selector: 'app-operations',
-  templateUrl: './operations.component.html',
-  styleUrls: ['./operations.component.css']
+  selector: 'app-services',
+  templateUrl: './services.component.html',
+  styleUrls: ['./services.component.css']
 })
-export class OperationsComponent implements OnInit {
+export class ServicesComponent implements OnInit {
   filterText:string;
   loggedUser:User | null = null;;
   isLogged:boolean;
@@ -69,19 +72,12 @@ export class OperationsComponent implements OnInit {
     this.loadList(0, this.pagingInfo.pageSize, sortField);
   }
 
-  public showDetails(service:Service):void{
-    //let detailsDialog = this.dialog.open(OperationDetailsDialogComponent, {'data':{'service':service, 'isEdit':false, 'isAdmin':false}});
-    let detailsDialog = this.dialog.open(OperationDetailsDialogComponent, {'data':{'service':service, 'isEdit':true, 'isAdmin':true}});
-    detailsDialog.afterClosed().subscribe(result=>{
-      console.log(`this is the result ${result}`);      
-    });
-  }
-
   private loadList(pageIndex:number, pageSize:number, sortingField:string):void{
     this.servicesService.services(pageIndex, pageSize, sortingField).subscribe(
       data=>{
         this.services = data['content'].map(item=>{
-          return new Service(item['uuid'],item['name'], item['status'], item['cost'] );
+          return new Service(item['uuid'],item['name'], item['description'], 
+          item['type'], item['status'], item['cost'], item['numParameters'] );
         });
       //get paging information
       this.pagingInfo.length = data['totalElements'];
@@ -95,6 +91,44 @@ export class OperationsComponent implements OnInit {
         console.log('something happened while retrieving you data')
       }
     );
+  }
+
+  public details(service:Service):void{
+    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, {'data':{'service':service, 'isEdit':false, 'isAdmin':false}});
+    detailsDialog.afterClosed().subscribe(result=>{
+      console.log(`this is the result ${result}`);      
+    });
+  }
+
+  public edit(service:Service): void{
+    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, {'data':{'service':service, 'isEdit':true, 'isAdmin':this.isUserAdmin()}});
+    detailsDialog.afterClosed().subscribe(result=>{
+      console.log(`this is the result ${result}`);      
+    });
+  }
+
+  public delete(service:Service): void{
+    let confirmationDialog = this.dialog.open(ConfirmationDialogComponent, {data:{'question':'Are you sure you want to delete this service?'}});
+    confirmationDialog.afterClosed().subscribe(result=>{
+      this.servicesService.delete(service).subscribe(deleteResult=>{
+        let informationDialog = this.dialog.open(InformationDialogComponent, {data:{'message':'Service deleted successfully!'}});
+      }, err=>{
+        let informationDialog = this.dialog.open(InformationDialogComponent, {data:{'message':
+        'The service couldn\'t be deleted. Please try again.\nIf the problem persist please contact the Administrator.'}});
+      });
+    });
+  }
+
+  public new(): void {
+    let createServiceDialog = this.dialog.open(CreateServiceDialogComponent);
+    createServiceDialog.afterClosed().subscribe(result=>{
+      //if all went ok, then reload list
+      this.loadList(0, this.pagingInfo.pageSize, '');
+    });
+  }
+
+  public isUserAdmin():boolean{
+    return this.loggedUser && this.loggedUser.isAdmin();
   }
 
 }

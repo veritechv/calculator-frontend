@@ -1,7 +1,10 @@
 <app-menu></app-menu>
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">Filter by service name:</span>
-  <input type="text" class="form-control" aria-describedby="basic-addon1" (keyup)="filter($event)" [(ngModel)]="filterText" text="">
+  <input type="text" class="form-control" aria-describedby="basic-addon1" (keyup)="filter($event)" [(ngModel)]="filterText" placeholder="Type service name" text="">
+
+  <span class="input-group-text" id="basic-addon1">Add new service</span>
+  <button class="btn btn-primary" type="button" (click)="new()">Add</button>
 </div>
 <div class="container">
     <table class="table">
@@ -17,10 +20,13 @@
           <tr *ngFor="let service of displayedServices">
               <td><div class="text-center">{{service.name}}</div></td>
               <td><div class="text-center">{{service.cost}}</div></td>
-              <td><div class="text-center">{{service.status}}</div></td>
+              <td><div class="text-center">{{service.status | titlecase}}</div></td>
               <td>
                 <div class="text-center">
-                  <button class="btn btn-primary" type="button" (click)="showDetails(service)">Details</button>
+                  <button class="btn btn-primary" type="button" (click)="details(service)">Details</button>
+                  <button class="btn btn-success" type="button" (click)="execute(service)">Execute</button>
+                  <button class="btn btn-warning" type="button" (click)="edit(service)">Edit</button>
+                  <button class="btn btn-danger" type="button" (click)="delete(service)">Delete</button>                  
                 </div>
               </td>
           </tr>

@@ -1,0 +1,77 @@
+<div class="container-lg">
+    <h2 mat-dialog-title>Register new service</h2>
+    <mat-dialog-content>
+        <form [formGroup]="form" novalidate>
+            <div class="form-group" [ngClass]="{'is-invalid':type.invalid, 'is-valid':type.valid && type.dirty}">
+                <label>Type</label>
+                <select class="form-control" formControlName="type"  
+                [ngClass]="{'is-invalid': (type.invalid && type.dirty),'is-valid':(type.valid && type.dirty)}">
+                    <option value="" selected disabled hidden>Please select a type</option>
+                    <option *ngFor="let type of serviceTypes" [value]="type">
+                        {{type | titlecase}}
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Please give name to this new service</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Awesome service name"
+                    [ngClass]="{'is-invalid': (name.invalid && name.dirty),'is-valid':(name.valid && name.dirty)}">
+                <div class="invalid-feedback" *ngIf="name.invalid && name.dirty">
+                    We need a bigger name
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What it does</label>
+                <input type="text" class="form-control" formControlName="description" placeholder="Beautiful description"
+                    [ngClass]="{'is-invalid':desc.invalid && desc.dirty,'is-valid':desc.valid&&desc.dirty}">
+            </div>
+
+            <div class="form-group">
+                <label>How much it cost to execute</label>
+                <input type="text" class="form-control" formControlName="cost" 
+                [ngClass]="{'is-invalid':cost.invalid && cost.dirty,'is-valid':cost.valid && cost.dirty}">
+                <div class="invalid-feedback" *ngIf="cost.invalid && cost.dirty">
+                    Only positive numbers please
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How many paramters does it must receive to work properly.</label>
+                <label>You can leave it as zero, if it doesn't need any</label>
+                <input type="text" class="form-control" formControlName="numParams" 
+                    [ngClass]="{'is-invalid':numParams.invalid && numParams.dirty,'is-valid':numParams.valid && numParams.dirty}">
+                <div class="invalid-feedback" *ngIf="numParams.invalid && numParams.dirty">
+                    Only numbers please
+                </div>
+            </div>
+
+        </form>
+        <div class="form-group">
+            <label>New services are Inactive by default. You can change it later.</label>
+        </div>
+
+        <div *ngIf="saveMessage!=null && !wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+    
+        <div *ngIf="saveMessage!=null && wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+        
+    </mat-dialog-content>
+
+
+    
+
+
+    <mat-dialog-actions>
+        <button class="btn btn-primary"(click)="close()">Close</button>
+        <button class="btn"(click)="save()" 
+            [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}" 
+            [disabled]="!form.valid && !form.dirty">Save</button>
+    </mat-dialog-actions>
+
+</div>

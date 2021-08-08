@@ -36,6 +36,22 @@ export class ServicesService {
     return this.httpClient.put<Service>(this.buildUrl(),service);
   }
 
+  public delete(service:Service):Observable<string>{
+    return this.httpClient.delete<string>(this.buildUrl()+'/'+service.uuid);
+  }
+
+  public create(service:Service):Observable<Service>{
+    return this.httpClient.post<Service>(this.buildUrl(), service);
+  }
+
+  public serviceStatusList():string[]{
+    return this.appSettingsService.getServiceStatusList();
+  }
+
+  public serviceTypes():Observable<string[]>{
+    return this.httpClient.get<string[]>(this.buildUrl()+'/types');
+  }
+
   private buildUrl():string{    
     return  this.apiBaseUrl+endpoint;    
   }
