@@ -25,6 +25,7 @@ import { ServiceDetailsDialogComponent } from './components/service-details-dial
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { InformationDialogComponent } from './components/information-dialog/information-dialog.component';
 import { CreateServiceDialogComponent } from './components/create-service-dialog/create-service-dialog.component';
+import { ExecuteServiceDialogComponent } from './components/execute-service-dialog/execute-service-dialog.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { CreateServiceDialogComponent } from './components/create-service-dialog
     ServiceDetailsDialogComponent,
     ConfirmationDialogComponent,
     InformationDialogComponent,
-    CreateServiceDialogComponent
+    CreateServiceDialogComponent,
+    ExecuteServiceDialogComponent
 
   ],
   imports: [

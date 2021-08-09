@@ -18,7 +18,7 @@ export class CreateServiceDialogComponent implements OnInit {
   desc: FormControl;
   cost: FormControl;
   numParams: FormControl;
-  saveMessage: string = '';
+  saveMessage: string = null;
   wasSaveSuccessful: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<CreateServiceDialogComponent>,

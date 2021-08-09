@@ -1,10 +1,14 @@
 <app-menu></app-menu>
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">Filter by service name:</span>
-  <input type="text" class="form-control" aria-describedby="basic-addon1" (keyup)="filter($event)" [(ngModel)]="filterText" placeholder="Type service name" text="">
-
-  <span class="input-group-text" id="basic-addon1">Add new service</span>
-  <button class="btn btn-primary" type="button" (click)="new()">Add</button>
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-5 col-form-label">Filter by service name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" aria-describedby="basic-addon1" (keyup)="filter($event)" [(ngModel)]="filterText" placeholder="Type service name" text="">
+    </div>
+  </div>
+  <div class="col-md-4">    
+    <button class="btn btn-primary" type="button" (click)="new()">Add service</button>
+  </div>
 </div>
 <div class="container">
     <table class="table">
@@ -25,8 +29,8 @@
                 <div class="text-center">
                   <button class="btn btn-primary" type="button" (click)="details(service)">Details</button>
                   <button class="btn btn-success" type="button" (click)="execute(service)">Execute</button>
-                  <button class="btn btn-warning" type="button" (click)="edit(service)">Edit</button>
-                  <button class="btn btn-danger" type="button" (click)="delete(service)">Delete</button>                  
+                  <button *ngIf="isUserAdmin()" class="btn btn-warning" type="button" (click)="edit(service)">Edit</button>
+                  <button *ngIf="isUserAdmin()" class="btn btn-danger" type="button" (click)="delete(service)">Delete</button>                  
                 </div>
               </td>
           </tr>

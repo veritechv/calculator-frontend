@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
@@ -27,7 +27,6 @@ export class UsersService {
 
   public findUser(username:string):Observable<User>{
     // Setup log namespace query parameter
-    let params = new HttpParams().set('username', username);
     return this.httpClient.get<User>(this.buildSearchUserUrl()+'/'+username, headers);
   }
   private buildUrl():string{

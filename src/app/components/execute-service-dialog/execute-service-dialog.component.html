@@ -1,0 +1,56 @@
+<div>
+    <h2 mat-dialog-title>Execute {{service.name | titlecase}} service</h2>
+    <mat-dialog-content>
+        <div class="form-group card-body">
+            <div>
+                <label disabled>{{service.description}}</label>
+            </div>
+        </div>
+
+        <form [formGroup]="form" novalidate>
+            <div class="form-group card-body" *ngFor="let param of formParameters; let i = index">
+                <label class="form-label">{{param}}</label>
+                <input type="text" class="form-control" formControlName="{{param}}"
+                    [ngClass]="{'is-invalid': (form.controls[formParameters[i]].invalid && form.controls[formParameters[i]].dirty),
+                        'is-valid':(form.controls[formParameters[i]].valid && form.controls[formParameters[i]].dirty)}">
+                <div class="invalid-feedback"
+                    *ngIf="form.controls[formParameters[i]].invalid && form.controls[formParameters[i]].dirty">
+                    Seems like an invalid value has been entered
+                </div>
+            </div>
+        </form>
+
+        <div *ngIf="serviceResponse!=null" class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="card-header">
+                Execution result
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Service executed: {{serviceResponse.executionDate | date : 'medium'}}</li>
+                <li class="list-group-item">Service result: {{serviceResponse.response}}</li>
+                <li class="list-group-item">These were the parameters: {{serviceResponse.usedParameters}}</li>
+                <li class="list-group-item">Your remaining balance is: {{serviceResponse.remainingBalance}}</li>
+            </ul>
+        </div>
+    </mat-dialog-content>
+
+
+<!--
+        <div class="alert alert-danger" *ngIf="saveMessage!=null && !wasSaveSuccessful">
+            {{saveMessage}}            
+        </div>
+    
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="saveMessage!=null && wasSaveSuccessful">
+            {{saveMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        -->
+
+
+<mat-dialog-actions>
+    <button class="btn btn-primary" (click)="close()">Close</button>
+    <button class="btn" (click)="execute()"
+        [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+        [disabled]="!form.valid && !form.dirty">Execute</button>
+</mat-dialog-actions>
+
+</div>

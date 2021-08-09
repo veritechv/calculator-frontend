@@ -9,6 +9,7 @@ import { ServiceDetailsDialogComponent } from '../service-details-dialog/service
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
 import { CreateServiceDialogComponent } from '../create-service-dialog/create-service-dialog.component';
+import { ExecuteServiceDialogComponent } from '../execute-service-dialog/execute-service-dialog.component';
 
 class PagingInfo
 {
@@ -26,11 +27,11 @@ class PagingInfo
 })
 export class ServicesComponent implements OnInit {
   filterText:string;
-  loggedUser:User | null = null;;
+  loggedUser:User = null;;
   isLogged:boolean;
   services:Service[] = [];
   displayedServices:Service[] = [];
-  pagingInfo:PagingInfo = new PagingInfo(0,2,0,null);
+  pagingInfo:PagingInfo = new PagingInfo(0,10,0,null);
 
   constructor(private servicesService:ServicesService, 
     private userSessionService:UserSessionService, 
@@ -127,8 +128,25 @@ export class ServicesComponent implements OnInit {
     });
   }
 
+  public execute(service:Service): void{
+    let executeDialog = this.dialog.open(ExecuteServiceDialogComponent, {data : {'service':service, 'username':this.loggedUser.username}});
+    executeDialog.afterClosed().subscribe(result=>{
+      console.log('service executed');
+      
+    }, err=>{
+      console.log(err);
+      
+    });
+  }
+
   public isUserAdmin():boolean{
     return this.loggedUser && this.loggedUser.isAdmin();
+  }
+
+  private checkIfUserIsLogged(){
+    if(this.loggedUser == null){
+      this.dialog.open(InformationDialogComponent, {data:{'message':'Your session has expired please loging again.'}});
+    }
   }
 
 }
