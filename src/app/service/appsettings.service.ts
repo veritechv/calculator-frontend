@@ -1,9 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const SETTINGS_LOCATION = "/assets/app-settings.json";
 
+/**
+ * The purpose of this class is to concentrate the access to
+ * application and environment variables in one place
+ * The file app-settings.json will hold values specific to the business logic of the application
+ * while the environment*.ts files will have values to access third parties, passworks, keys, etc
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +20,7 @@ export class AppsettingsService {
     this.loadSettings();
   }
 
-  //importan to return the promise, because this is happening during 
+  //important to return the promise, because this is happening during 
   //initialization and we need to make angular wait until it's the file is loaded/resolved
   public loadSettings() {
     return this.httpClient.get(SETTINGS_LOCATION).toPromise().then(
@@ -26,11 +32,11 @@ export class AppsettingsService {
   }
 
   public getApiVersion(){
-    return this.appConfig.apiVersion;
+    return environment.apiVersion;
   }
 
   public getApiBaseUrl(){
-    return this.appConfig.apiBaseUrl;
+    return environment.apiBaseUrl;
   }
 
   public getServiceStatusList():string[]{

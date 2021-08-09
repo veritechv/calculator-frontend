@@ -10,14 +10,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { InformationDialogComponent } from '../information-dialog/information-dialog.component';
 import { CreateServiceDialogComponent } from '../create-service-dialog/create-service-dialog.component';
 import { ExecuteServiceDialogComponent } from '../execute-service-dialog/execute-service-dialog.component';
-
-class PagingInfo {
-  constructor(public length: number = 0,
-    public pageSize: number = 0,
-    public pageIndex: number = 0,
-    public pageEvent: PageEvent = null) { }
-}
-
+import { PagingInfo } from 'src/app/model/paging-info';
 
 @Component({
   selector: 'app-services',

@@ -1,1 +1,67 @@
-<p>record-details-dialog works!</p>
+<div>
+    <h2 mat-dialog-title>Record details</h2>
+    <mat-dialog-content>
+        <form [formGroup]="form" novalidate>
+            <div class="form-group card-body">
+                <label class="form-label">UUID {{record.uuid}}</label>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Service Name: {{record.serviceName | titlecase}}</label>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Service Type: {{record.serviceType | titlecase}}</label>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">User: {{record.username | titlecase}}</label>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Date executed {{record.date | date : 'medium'}}</label>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Cost</label>
+                <input type="text" class="form-control" formControlName="cost"
+                    [ngClass]="{'is-invalid':cost.invalid && cost.dirty,'is-valid':cost.valid && cost.dirty}" [attr.disabled]="!isEdit">
+                <div class="invalid-feedback" *ngIf="cost.invalid && cost.dirty">
+                    Only positive numbers please
+                </div>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Balance</label>
+                <input type="text" class="form-control" formControlName="balance"
+                    [ngClass]="{'is-invalid':balance.invalid && balance.dirty,'is-valid':balance.valid && balance.dirty}" [attr.disabled]="!isEdit">
+                <div class="invalid-feedback" *ngIf="balance.invalid && balance.dirty">
+                    Only positive numbers please
+                </div>
+            </div>
+            <div class="form-group card-body">
+                <label class="form-label">Response</label>
+                <input type="text" class="form-control" formControlName="response"
+                    [ngClass]="{'is-invalid':response.invalid && response.dirty,'is-valid':response.valid && response.dirty}" [attr.disabled]="!isEdit">
+                <div class="invalid-feedback" *ngIf="response.invalid && response.dirty">
+                    Only positive numbers please
+                </div>
+            </div>
+        </form>
+
+        <div class="alert alert-danger" *ngIf="saveMessage!=null && !wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+            *ngIf="saveMessage!=null && wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button class="btn btn-primary" (click)="close()">Close</button>
+        <button *ngIf="!isEdit" class="btn" (click)="delete()"
+        [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+        [disabled]="!form.valid && !form.dirty">Delete</button>
+        <button *ngIf="isEdit" class="btn" (click)="update()"
+            [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+            [disabled]="!form.valid && !form.dirty">Update</button>
+    </mat-dialog-actions>
+
+</div>

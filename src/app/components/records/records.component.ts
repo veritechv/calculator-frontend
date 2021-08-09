@@ -6,6 +6,7 @@ import { Record } from 'src/app/model/record';
 import { User } from 'src/app/model/user';
 import { RecordsService } from 'src/app/service/records.service';
 import { UserSessionService } from 'src/app/service/user-session.service';
+import { RecordDetailsDialogComponent } from '../record-details-dialog/record-details-dialog.component';
 
 @Component({
   selector: 'app-records',
@@ -64,6 +65,13 @@ export class RecordsComponent implements OnInit {
     );
   }
 
+  public details(record:Record):void{
+    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': false} });
+  }
+
+  public edit(record:Record):void{
+    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': true} });
+  }
 
   /*
    * This function is called by the paginator to get the next batch of results
