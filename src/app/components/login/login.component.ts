@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
             data=>{              
               //I can't treat data as User even if it holds the same values.
               //I need to create a User object to have access to it's methods.
-              let foundUser = new User(data.username, data.roles, data.status, data.balance);
+              let foundUser = new User(data.username, data.uuid, data.roles, data.status, data.balance);
               this.userSessionService.setLoggedUser(foundUser);//we should get here a token back 
             },
             err=>{

@@ -1,0 +1,61 @@
+<div>
+    <h2 mat-dialog-title>Details of {{user.username}}</h2>
+    <mat-dialog-content>
+        <form [formGroup]="form" novalidate>
+            
+            <div class="form-group card-body"
+                [ngClass]="{'is-invalid':role.invalid && role.dirty, 'is-valid':role.valid && role.dirty}">
+                <label class="form-label">Role</label>
+                <select class="form-control" formControlName="role"
+                    [ngClass]="{'is-invalid': (role.invalid && role.dirty),'is-valid':(role.valid && role.dirty)}" [attr.disabled]="!isEdit">
+                    <option value="" selected disabled hidden>Please select a role</option>
+                    <option *ngFor="let role of roles" [value]="role">
+                        {{role | titlecase}}
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="form-group card-body">
+                <label class="form-label">Balance</label>
+                <input type="text" class="form-control" formControlName="balance"
+                    [ngClass]="{'is-invalid':balance.invalid && balance.dirty,'is-valid':balance.valid && balance.dirty}" [attr.disabled]="!isEdit">
+                <div class="invalid-feedback" *ngIf="balance.invalid && balance.dirty">
+                    Only positive numbers please
+                </div>
+            </div>
+
+            <div class="form-group card-body"
+                [ngClass]="{'is-invalid':status.invalid && status.dirty, 'is-valid':status.valid && status.dirty}">
+                <label class="form-label">Status</label>
+                <select class="form-control" formControlName="status"
+                    [ngClass]="{'is-invalid': (status.invalid && status.dirty),'is-valid':(status.valid && status.dirty)}" [attr.disabled]="!isEdit">
+                    <option value="" selected disabled hidden>Please select a status</option>
+                    <option *ngFor="let status of statuses" [value]="status">
+                        {{status | titlecase}}
+                    </option>
+
+                </select>
+            </div>
+
+        </form>
+
+        <div class="alert alert-danger" *ngIf="saveMessage!=null && !wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+            *ngIf="saveMessage!=null && wasSaveSuccessful">
+            {{saveMessage}}
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button class="btn btn-primary" (click)="close()">Close</button>
+        <button *ngIf="isEdit" class="btn" (click)="update()"
+            [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+            [disabled]="!form.valid && !form.dirty">Update</button>
+    </mat-dialog-actions>
+
+</div>

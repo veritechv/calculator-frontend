@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="col-md-4">    
-    <button class="btn btn-primary" type="button" (click)="new()">Add service</button>
+    <button *ngIf="isUserAdmin()" class="btn btn-primary" type="button" (click)="new()">Add service</button>
   </div>
 </div>
 <div class="container">

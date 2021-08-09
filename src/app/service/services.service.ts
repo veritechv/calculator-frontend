@@ -7,6 +7,7 @@ import { AppsettingsService } from './appsettings.service';
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 const endpoint = '/services';
+const listEndpoint = '/list';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ServicesService {
     this.apiVersion = appSettingsService.getApiVersion();
   }
 
-  public services(pageIndex: number, pageSize: number, sortingField: string): Observable<Service[]> {
+  public services(pageIndex: number, pageSize: number, sortingField: string, isAdmin:boolean): Observable<Service[]> {
     //for some reason HttpParamsOptions is not found, building params by hand
     const httpParams: HttpParams = new HttpParams().
       append('pageIndex', pageIndex + '').
@@ -28,8 +29,10 @@ export class ServicesService {
       append('sortBy', sortingField);
 
     const options = { params: httpParams, headers: headers };
+    let url = this.buildUrl() + listEndpoint;
+    url = isAdmin ? url+'/admin' : url;
 
-    return this.httpClient.get<Service[]>(this.buildUrl() + '/list', options);
+    return this.httpClient.get<Service[]>(url, options);
   }
 
   public update(service: Service): Observable<Service> {

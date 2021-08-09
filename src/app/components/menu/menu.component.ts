@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../model/user';
 import { UserSessionService } from '../../service/user-session.service';
+import { UserProfileDialogComponent } from '../user-profile-dialog/user-profile-dialog.component';
 
 @Component({
   selector: 'app-menu',
@@ -13,7 +15,8 @@ export class MenuComponent implements OnInit {
   isLogged:boolean;
   
 
-  constructor(private router:Router, private userSessionService:UserSessionService) { 
+  constructor(private router:Router, private userSessionService:UserSessionService,
+    private dialog:MatDialog) { 
     this.isLogged = false;
   }
 
@@ -32,6 +35,9 @@ export class MenuComponent implements OnInit {
     });
   }
   
+  public myProfile(){
+    this.dialog.open(UserProfileDialogComponent);
+  }
 
   public logOut():void{
     this.userSessionService.logOut();

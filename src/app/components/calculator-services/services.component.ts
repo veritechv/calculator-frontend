@@ -11,12 +11,11 @@ import { InformationDialogComponent } from '../information-dialog/information-di
 import { CreateServiceDialogComponent } from '../create-service-dialog/create-service-dialog.component';
 import { ExecuteServiceDialogComponent } from '../execute-service-dialog/execute-service-dialog.component';
 
-class PagingInfo
-{
-  constructor(public length:number = 0, 
-    public pageSize:number = 0, 
-    public pageIndex:number = 0, 
-    public pageEvent: PageEvent = null){}
+class PagingInfo {
+  constructor(public length: number = 0,
+    public pageSize: number = 0,
+    public pageIndex: number = 0,
+    public pageEvent: PageEvent = null) { }
 }
 
 
@@ -26,42 +25,45 @@ class PagingInfo
   styleUrls: ['./services.component.css']
 })
 export class ServicesComponent implements OnInit {
-  filterText:string;
-  loggedUser:User = null;;
-  isLogged:boolean;
-  services:Service[] = [];
-  displayedServices:Service[] = [];
-  pagingInfo:PagingInfo = new PagingInfo(0,10,0,null);
+  filterText: string;
+  loggedUser: User = null;;
+  isLogged: boolean;
+  services: Service[] = [];
+  displayedServices: Service[] = [];
+  pagingInfo: PagingInfo = new PagingInfo(0, 10, 0, null);
 
-  constructor(private servicesService:ServicesService, 
-    private userSessionService:UserSessionService, 
-    private dialog:MatDialog) { }
+  constructor(private servicesService: ServicesService,
+    private userSessionService: UserSessionService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isLogged = this.userSessionService.isLogged();
-    if(this.isLogged){
+    if (this.isLogged) {
       this.loggedUser = this.userSessionService.getLoggedUser();
     }
 
-    this.userSessionService.getLoggedUser$().subscribe(user=>{
+    this.userSessionService.getLoggedUser$().subscribe(user => {
       this.loggedUser = user;
       this.isLogged = true;
     });
 
-    this.loadList(this.pagingInfo.pageIndex, this.pagingInfo.pageSize, '' );
+    this.loadList(this.pagingInfo.pageIndex, this.pagingInfo.pageSize, '');
   }
 
-  public filter(keyEvent:any):void{
-    if(this.filterText!== null && this.filterText!==''){
-      this.displayedServices = this.services.filter(service=>{
+  public filter(keyEvent: any): void {
+    if (this.filterText !== null && this.filterText !== '') {
+      this.displayedServices = this.services.filter(service => {
         return service.name.toLowerCase().includes(this.filterText.toLowerCase());
       });
-    }else{
+    } else {
       this.displayedServices = this.services;
     }
   }
 
-  public fetch(event:PageEvent):PageEvent{
+  /*
+   * This function is called by the paginator to get the next batch of results
+   */
+  public fetch(event: PageEvent): PageEvent {
     this.loadList(event.pageIndex, event.pageSize, '');
     return event;
   }
@@ -69,83 +71,92 @@ export class ServicesComponent implements OnInit {
   /*
     Sorting will reload again the list starting from zero.
   */
-  public sort(sortField:string):void{
+  public sort(sortField: string): void {
     this.loadList(0, this.pagingInfo.pageSize, sortField);
   }
 
-  private loadList(pageIndex:number, pageSize:number, sortingField:string):void{
-    this.servicesService.services(pageIndex, pageSize, sortingField).subscribe(
-      data=>{
-        this.services = data['content'].map(item=>{
-          return new Service(item['uuid'],item['name'], item['description'], 
-          item['type'], item['status'], item['cost'], item['numParameters'] );
+  private loadList(pageIndex: number, pageSize: number, sortingField: string): void {
+    this.servicesService.services(pageIndex, pageSize, sortingField, this.loggedUser.isAdmin()).subscribe(
+      data => {
+        this.services = data['content'].map(item => {
+          return new Service(item['uuid'], item['name'], item['description'],
+            item['type'], item['status'], item['cost'], item['numParameters']);
         });
-      //get paging information
-      this.pagingInfo.length = data['totalElements'];
-      this.pagingInfo.pageSize = data['pageable']['pageSize'];
-      this.pagingInfo.pageIndex = data['pageable']['pageNumber'];
+        //get paging information
+        this.pagingInfo.length = data['totalElements'];
+        this.pagingInfo.pageSize = data['pageable']['pageSize'];
+        this.pagingInfo.pageIndex = data['pageable']['pageNumber'];
 
         this.displayedServices = this.services;
-        
+
       },
-      err=>{
+      err => {
         console.log('something happened while retrieving you data')
       }
     );
   }
 
-  public details(service:Service):void{
-    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, {'data':{'service':service, 'isEdit':false, 'isAdmin':false}});
-    detailsDialog.afterClosed().subscribe(result=>{
-      console.log(`this is the result ${result}`);      
+  public details(service: Service): void {
+    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, { 'data': { 'service': service, 'isEdit': false, 'isAdmin': false } });
+    detailsDialog.afterClosed().subscribe(result => {
+      console.log(`this is the result ${result}`);
     });
   }
 
-  public edit(service:Service): void{
-    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, {'data':{'service':service, 'isEdit':true, 'isAdmin':this.isUserAdmin()}});
-    detailsDialog.afterClosed().subscribe(result=>{
-      console.log(`this is the result ${result}`);      
+  public edit(service: Service): void {
+    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, { 'data': { 'service': service, 'isEdit': true, 'isAdmin': this.isUserAdmin() } });
+    detailsDialog.afterClosed().subscribe(result => {
+      console.log(`this is the result ${result}`);
     });
   }
 
-  public delete(service:Service): void{
-    let confirmationDialog = this.dialog.open(ConfirmationDialogComponent, {data:{'question':'Are you sure you want to delete this service?'}});
-    confirmationDialog.afterClosed().subscribe(result=>{
-      this.servicesService.delete(service).subscribe(deleteResult=>{
-        let informationDialog = this.dialog.open(InformationDialogComponent, {data:{'message':'Service deleted successfully!'}});
-      }, err=>{
-        let informationDialog = this.dialog.open(InformationDialogComponent, {data:{'message':
-        'The service couldn\'t be deleted. Please try again.\nIf the problem persist please contact the Administrator.'}});
-      });
+  public delete(service: Service): void {
+    let confirmationDialog = this.dialog.open(ConfirmationDialogComponent, { data: { 'question': 'Are you sure you want to delete this service?' } });
+    confirmationDialog.afterClosed().subscribe(result => {
+      if (result === "true") {
+        this.servicesService.delete(service).subscribe(
+          deleteResult => {
+            let informationDialog = this.dialog.open(InformationDialogComponent, { data: { 'message': 'Service deleted successfully!' } });
+            this.loadList(0, this.pagingInfo.pageSize, '');
+          },
+          err => {
+            let informationDialog = this.dialog.open(InformationDialogComponent, {
+              data: {
+                'response':
+                  'The service couldn\'t be deleted. Please try again.\nIf the problem persist please contact the Administrator.'
+              }
+            });
+          });
+      }
     });
   }
 
   public new(): void {
     let createServiceDialog = this.dialog.open(CreateServiceDialogComponent);
-    createServiceDialog.afterClosed().subscribe(result=>{
+    createServiceDialog.afterClosed().subscribe(result => {
       //if all went ok, then reload list
       this.loadList(0, this.pagingInfo.pageSize, '');
     });
   }
 
-  public execute(service:Service): void{
-    let executeDialog = this.dialog.open(ExecuteServiceDialogComponent, {data : {'service':service, 'username':this.loggedUser.username}});
-    executeDialog.afterClosed().subscribe(result=>{
+  public execute(service: Service): void {
+    let executeDialog = this.dialog.open(ExecuteServiceDialogComponent, { data: { 'service': service, 'username': this.loggedUser.username } });
+    executeDialog.afterClosed().subscribe(result => {
       console.log('service executed');
-      
-    }, err=>{
+
+    }, err => {
       console.log(err);
-      
+
     });
   }
 
-  public isUserAdmin():boolean{
+  public isUserAdmin(): boolean {
     return this.loggedUser && this.loggedUser.isAdmin();
   }
 
-  private checkIfUserIsLogged(){
-    if(this.loggedUser == null){
-      this.dialog.open(InformationDialogComponent, {data:{'message':'Your session has expired please loging again.'}});
+  private checkIfUserIsLogged() {
+    if (this.loggedUser == null) {
+      this.dialog.open(InformationDialogComponent, { data: { 'message': 'Your session has expired please loging again.' } });
     }
   }
 

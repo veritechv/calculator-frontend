@@ -1,13 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { AppsettingsService } from './appsettings.service';
 
-const headers= {headers: new HttpHeaders({'Content-Type':'application/json'})};
+const headers = new HttpHeaders().set('Content-Type', 'application/json');
 const baseEndpoint = '/users';
-const listEndpoint = '/list'
-const searchUserEndPoint = '/search';
+const userRolesEndpoint = "/roles";
+const userStatusesEndpoint = "/statuses";
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +21,40 @@ export class UsersService {
     this.apiVersion = appSettingsService.getApiVersion();
   }
 
-  public users():Observable<User[]>{
-    return this.httpClient.get<User[]>(this.buildUrl(), headers);
+  public users(pageIndex:number, pageSize:number, sortingField:string):Observable<User[]>{
+    const httpParams: HttpParams = new HttpParams().
+    append('pageIndex', pageIndex + '').
+    append('pageSize', pageSize + '').
+    append('sortBy', sortingField);
+
+    const options = { params: httpParams, headers: headers };
+
+    return this.httpClient.get<User[]>(this.buildUrl(), options);
+
   }
 
   public findUser(username:string):Observable<User>{
     // Setup log namespace query parameter
-    return this.httpClient.get<User>(this.buildSearchUserUrl()+'/'+username, headers);
+    return this.httpClient.get<User>(this.buildSearchUserUrl()+'/'+username);
   }
+
+  public delete(user: User): Observable<string> {
+    return this.httpClient.delete<string>(this.buildUrl() + '/' + user.username);
+  }
+
+  public update(user: User): Observable<User> {
+    return this.httpClient.put<User>(this.buildUrl(), user);
+  }
+
+  public userRolesList():Observable<string[]>{
+    return this.httpClient.get<string[]>(this.buildUrl()+userRolesEndpoint);
+  }
+
+  public userStatusesList():Observable<string[]>{
+    return this.httpClient.get<string[]>(this.buildUrl()+userStatusesEndpoint);
+  }
+
+
   private buildUrl():string{
     return this.apiBaseUrl+baseEndpoint;
   }

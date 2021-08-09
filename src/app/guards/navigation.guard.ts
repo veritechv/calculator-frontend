@@ -9,7 +9,7 @@ import { UserSessionService } from '../service/user-session.service';
 export class NavigationGuard implements CanActivate {
   constructor(private userSessionService:UserSessionService, private router:Router){}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if(!this.userSessionService.getToken()){
+    if(!this.userSessionService.getToken() || !this.userSessionService.getLoggedUser()){
       this.router.navigate(['/']);//lets go home
       return false;
     }

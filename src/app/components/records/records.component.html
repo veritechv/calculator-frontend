@@ -1,1 +1,52 @@
-<p>records works!</p>
+<app-menu></app-menu>
+<div class="input-group mb-3">
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-5 col-form-label">Filter by type</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" aria-describedby="basic-addon1" (keyup)="filter($event)" [(ngModel)]="filterText" text="">
+    </div>
+  </div>
+</div>
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><div class="d-grid gap-2 position-relative"><button class="btn btn-link" type="button"(click)="sort('uuid')">UUID</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('serviceName')">Service executed</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('serviceType')">Service type</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('username')">Requesting User</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('cost')">Execution Cost</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('balance')">Balance after execution</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('date')">Execution date</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button" >Action</button></div></th>
+          </tr>
+        </thead>
+        <tbody class="table-stripped">
+          <tr *ngFor="let record of displayedRecords">
+              <td><div class="text-center">{{record.uuid}}</div></td>
+              <td><div class="text-center">{{record.serviceName | titlecase}}</div></td>
+              <td><div class="text-center">{{record.serviceType | titlecase}}</div></td>
+              <td><div class="text-center">{{record.username}}</div></td>
+              <td><div class="text-center">{{record.cost}}</div></td>
+              <td><div class="text-center">{{record.balance}}</div></td>
+              <td><div class="text-center">{{record.date | date : 'medium'}}</div></td>
+              <td>
+                <div class="text-center">
+                  <button class="btn btn-primary" type="button" (click)="details(record)">Details</button>
+                  <button class="btn btn-warning" type="button" (click)="edit(record)">Edit</button>
+                </div>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+<div class="d-flex justify-content-center">
+  <mat-paginator [length]="pagingInfo.length"
+                [pageSize]="pagingInfo.pageSize"
+                [pageIndex]="pagingInfo.pageIndex"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="pagingInfo.pageEvent = fetch($event)"
+                aria-label="Select page">
+  </mat-paginator>
+</div>
