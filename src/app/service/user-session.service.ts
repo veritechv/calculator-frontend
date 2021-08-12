@@ -22,14 +22,12 @@ export class UserSessionService {
 
   public getToken():string{
     var token = sessionStorage.getItem(TOKEN_KEY);
-    console.log('getting token:'+ token);
     return token;
     
   }
 
   public setToken(token:string):void{
     sessionStorage.removeItem(TOKEN_KEY);
-    console.log('Removing and setting a new token:'+token);
     sessionStorage.setItem(TOKEN_KEY, token);
   }
 
@@ -42,13 +40,9 @@ export class UserSessionService {
   }
 
   public logOut():void{
-    console.log('calling clear storage');
-    sessionStorage.clear();
-    console.log('removing user in session');
-    this.loggedUser = null;
-    console.log('sending notification of log out');
-    this.loggedUser$.next(this.loggedUser);
-    
+    sessionStorage.clear();    
+    this.loggedUser = null;    
+    this.loggedUser$.next(this.loggedUser);   
   }
 
   public isLogged(){

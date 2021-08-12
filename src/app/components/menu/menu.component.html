@@ -1,44 +1,50 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Online Calculator</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/">
-                <i class="fas fa-home"></i>Home</a>
-          </li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Online Calculator</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/">
+            <i class="fas fa-home"></i>Home</a>
+        </li>
 
-          <li *ngIf="isLogged" class="nav-item">
-            <a class="nav-link active" routerLink="/services"><i class="fas fa-calculator"></i> Services</a>
-          </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link active" routerLink="/services"><i class="fas fa-calculator"></i> Services</a>
+        </li>
 
-          <li *ngIf="isLogged" class="nav-item">
-            <a class="nav-link active" routerLink="/records">
-                <i class="fas fa-list"></i> Records</a>
-          </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link active" routerLink="/records">
+            <i class="fas fa-list"></i> Records</a>
+        </li>
 
-          <li *ngIf="isLogged && isUserAdmin()" class="nav-item">
-            <a class="nav-link active" routerLink="/users"><i class="fas fa-users"></i> Users</a>
-          </li>
+        <li *ngIf="isLogged && isUserAdmin()" class="nav-item">
+          <a class="nav-link active" routerLink="/users"><i class="fas fa-users"></i> Users</a>
+        </li>
 
-          <li *ngIf="isLogged  && isUserAdmin()" class="nav-item">
-            <a class="nav-link active" routerLink="/config"><i class="fas fa-cogs fa-list"></i> System configuration</a>
-          </li>        
+        <li *ngIf="isLogged  && isUserAdmin()" class="nav-item">
+          <a class="nav-link active" routerLink="/config"><i class="fas fa-cogs fa-list"></i> System configuration</a>
+        </li>
 
-          <ul class="navbar-nav ml-auto" *ngIf="isLogged">
-            <li class="nav-item">
-              <div class="col-md-4">    
-                <button class="btn btn-link" type="button" (click)="myProfile()">My Profile</button>
-              </div>
-            </li>
-            
-        </ul>                
-          <button *ngIf='!isLogged' class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="/login"><i class="fas fa-sign-in-alt"></i> Login</button>
-          <button *ngIf='isLogged' class="btn btn-outline-danger my-2 my-sm-0" type="submit" (click)="logOut()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </ul>
-      </div>
+
+      </ul>
+
+      
+        <div class="row">
+          <div class="col-md-12 mb-4">
+            <button *ngIf='isLogged' type="button" class="btn btn-warning waves-effect" (click)="myProfile()"><i
+                class="far fa-user pr-2" aria-hidden="true"></i></button>
+            <button *ngIf='!isLogged' class="btn btn-outline-success" type="submit" routerLink="/login"><i
+                class="fas fa-sign-in-alt"></i> Login</button>
+            <button *ngIf='isLogged' class="btn btn-outline-danger" type="submit" (click)="logOut()"><i
+                class="fas fa-sign-out-alt"></i> Logout</button>
+          </div>
+        </div>
+      
+
     </div>
-  </nav>
+  </div>
+</nav>

@@ -36,7 +36,7 @@ export class AppsettingsService {
   }
 
   public getApiBaseUrl(){
-    return environment.apiBaseUrl;
+    return environment.apiBaseUrl+'/'+environment.apiVersion;
   }
 
   public getServiceStatusList():string[]{

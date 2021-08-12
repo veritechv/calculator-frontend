@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
-import {FormsModule, FormGroup, FormControl} from '@angular/forms';
-import { ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-
-class SignupInfo {
-  constructor(public username:string = '',
-              public password:string = '',
-              public passwordCheck:string='') {
-  }
-}
 
 @Component({
   selector: 'app-sign-up',
@@ -18,51 +10,66 @@ class SignupInfo {
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  model:SignupInfo = new SignupInfo();
-  @ViewChild('f')form:any;
+  form: FormGroup;
+  email: FormControl;
+  password: FormControl;
+  passwordVerify: FormControl;
 
-  errorMessage:string;
-  successMessage:string;
+  errorMessage: string;
+  successMessage: string;
 
-  constructor(private router:Router, private loginService:LoginService) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.createFormControls();
+    this.createFormGroup();
   }
 
-  public signUp(){
-    if(this.form.valid){
+  public signUp() {
+    //reset messages before every attempt
+    this.errorMessage = null;
+    this.successMessage = null;
 
-      if(this.model.password !== this.model.passwordCheck){
+    if (this.form.valid) {
+
+      if (this.password.value !== this.passwordVerify.value) {
         this.errorMessage = "Passwords don't match. Please Verify."
         return;
       }
 
       console.log('all good so far');
-      this.loginService.signUp(this.model.username, this.model.password).subscribe(result=>{       
-          this.successMessage=result['response'];
-          this.errorMessage = null;
-          this.form.reset();
+      this.loginService.signUp(this.email.value, this.password.value).subscribe(result => {
+        this.successMessage = result['response'];
+        this.errorMessage = null;
+        this.form.reset();
       },
-      err=>{
-        this.errorMessage = err.error['response'] || err.error;
-        this.successMessage = null;
-      });
-      
-      
-    }else{      
-      this.errorMessage= 'Some information is missing, please check.';
+        err => {
+          this.errorMessage = err.error['response'] || err.error;
+          this.successMessage = null;
+        });
+
+
+    } else {
+      this.errorMessage = 'Some information is missing, please check.';
     }
   }
-  public successfulSignUp():boolean{
-    return this.successMessage != null;
+
+
+  private createFormGroup(): void {
+    this.form = new FormGroup({
+      email: this.email,
+      password: this.password,
+      passwordVerify: this.passwordVerify
+    });
   }
 
-  public errorHappened():boolean{
-    return this.errorHappened != null;
+  private createFormControls(): void {
+    this.email = new FormControl('', [Validators.email, Validators.required]);
+    this.password = new FormControl('', [Validators.required]);
+    this.passwordVerify = new FormControl('', [Validators.required]);
   }
-
 
 }
-  
+
 
 

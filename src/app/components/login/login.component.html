@@ -2,18 +2,23 @@
 <div class="container">
     <div class="row m-3">
         <div class="col-md-6 mx-auto">
-            <div class="card">
-                <div class="card-header text-center">
-                    Please enter your credentials
-                </div>
-                <div class="card-body">
+            <form [formGroup]="form" novalidate>
+                <div class="card">
+                    <div class="card-header text-center">
+                        Please enter your credentials
+                    </div>
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-at"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" #username>
+                        <input type="email" class="form-control" placeholder="email" formControlName="email"
+                        [ngClass]="{'is-invalid': (email.invalid && email.dirty),'is-valid':(email.valid && email.dirty)}">
+                        <div class="invalid-feedback" *ngIf="email.invalid && email.dirty">
+                            Please enter a valid email address
+                        </div>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -21,21 +26,27 @@
                                 <i class="fas fa-key"></i>
                             </span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1" #password>
-                        </div>
-                            <div class="card-body text-center">
-                                <button class="btn btn-success btn-lg" (click)="validateCredentials(username.value, password.value)">
-                                  Login
-                                  </button>
-                            </div>
-                        </div>
-                        </div>
-                        <p></p>
-                        <div class="card-body text-center">
-                            If you don't have a user you can sing up <a class="link-success" routerLink="/signup">here</a>
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password"
+                        [ngClass]="{'is-invalid': (password.invalid && password.dirty),'is-valid':(password.valid && password.dirty)}">
+                        <div class="invalid-feedback" *ngIf="password.invalid && password.dirty">
+                            Please enter a password
                         </div>
                     </div>
+                    <div class="card-body text-center">
+                        <button class="btn" (click)="login()"
+                            [ngClass]="{'btn-success':form.valid && form.dirty, 'btn-outline-success':!form.valid && !form.dirty}"
+                            [disabled]="!form.valid && !form.dirty">Login</button>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="loginError!=null">
+                        {{loginError}}
+                    </div>
+
                 </div>
+            </form>
+            <p></p>
+            <div class="card-body text-center">
+                If you don't have a user you can sing up <a class="link-success" routerLink="/signup">here</a>
             </div>
-    
-    
+        </div>
+    </div>
+</div>

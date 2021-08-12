@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { logging } from 'protractor';
 import { Service } from 'src/app/model/service';
 import { ServiceRequest } from 'src/app/model/service-request';
 import { ServiceResponse } from 'src/app/model/service-response';
