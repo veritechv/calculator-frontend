@@ -51,7 +51,7 @@ export class RecordDetailsDialogComponent implements OnInit {
   private createFormControls(): void {
     this.cost = new FormControl(this.record.cost, [Validators.required, Validators.pattern('[0-9]+')]);
     this.response = new FormControl(this.record.response, [Validators.required, Validators.pattern('[0-9]+')]);
-    this.balance = new FormControl(this.record.date, [Validators.required, Validators.pattern('[0-9]+')]);
+    this.balance = new FormControl(this.record.balance, [Validators.required, Validators.pattern('[0-9]+')]);
   }
 
   public update() {

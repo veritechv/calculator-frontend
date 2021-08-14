@@ -49,7 +49,7 @@ export class RecordsComponent implements OnInit {
         this.records = data['content'].map(item => {
           return new Record(item['uuid'], item['serviceName'], item['serviceType'],
             item['username'], item['cost'], item['balance'],
-            item['response'], item['date']);
+            item['response'], item['date'], item['status']);
         });
         //get paging information
         this.pagingInfo.length = data['totalElements'];

@@ -15,24 +15,18 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col"><div class="d-grid gap-2 position-relative"><button class="btn btn-link" type="button"(click)="sort('uuid')">UUID</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('serviceName')">Service executed</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('serviceType')">Service type</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('username')">Requesting User</button></div></th>
-            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('cost')">Execution Cost</button></div></th>
-            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('balance')">Balance after execution</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('date')">Execution date</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button" >Action</button></div></th>
           </tr>
         </thead>
         <tbody class="table-stripped">
           <tr *ngFor="let record of displayedRecords">
-              <td><div class="text-center">{{record.uuid}}</div></td>
               <td><div class="text-center">{{record.serviceName | titlecase}}</div></td>
               <td><div class="text-center">{{record.serviceType | titlecase}}</div></td>
               <td><div class="text-center">{{record.username}}</div></td>
-              <td><div class="text-center">{{record.cost}}</div></td>
-              <td><div class="text-center">{{record.balance}}</div></td>
               <td><div class="text-center">{{record.date | date : 'medium'}}</div></td>
               <td>
                 <div class="text-center">

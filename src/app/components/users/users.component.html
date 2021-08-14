@@ -15,16 +15,16 @@
         <thead>
           <tr>
             <th scope="col"><div class="d-grid gap-2 position-relative"><button class="btn btn-link" type="button"(click)="sort('name')">Username</button></div></th>
-            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('status')">Status</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('cost')">Balance</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('status')">Status</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button" >Action</button></div></th>
           </tr>
         </thead>
         <tbody class="table-stripped">
           <tr *ngFor="let user of displayedUsers">
               <td><div class="text-center">{{user.username}}</div></td>
-              <td><div class="text-center">{{user.status | titlecase}}</div></td>
               <td><div class="text-center">{{user.balance}}</div></td>
+              <td><div class="text-center">{{user.status | titlecase}}</div></td>
               <td>
                 <div class="text-center">
                   <button class="btn btn-primary" type="button" (click)="details(user)">Details</button>

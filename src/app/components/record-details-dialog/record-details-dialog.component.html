@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="form-group card-body">
-                <label class="form-label">Balance</label>
+                <label class="form-label">Balance after execution</label>
                 <input type="text" class="form-control" formControlName="balance"
                     [ngClass]="{'is-invalid':balance.invalid && balance.dirty,'is-valid':balance.valid && balance.dirty}" [attr.disabled]="!isEdit">
                 <div class="invalid-feedback" *ngIf="balance.invalid && balance.dirty">
