@@ -31,26 +31,17 @@
                 <li class="list-group-item">Your remaining balance is: {{serviceResponse.remainingBalance}}</li>
             </ul>
         </div>
+        <div class="alert alert-danger" *ngIf="errorMessage!=null">
+            {{errorMessage}}
+        </div>
     </mat-dialog-content>
 
 
-<!--
-        <div class="alert alert-danger" *ngIf="saveMessage!=null && !wasSaveSuccessful">
-            {{saveMessage}}            
-        </div>
-    
-        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="saveMessage!=null && wasSaveSuccessful">
-            {{saveMessage}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        -->
-
-
-<mat-dialog-actions>
-    <button class="btn btn-primary" (click)="close()">Close</button>
-    <button class="btn" (click)="execute()"
-        [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
-        [disabled]="!form.valid && !form.dirty">Execute</button>
-</mat-dialog-actions>
+    <mat-dialog-actions>
+        <button class="btn btn-primary" (click)="close()">Close</button>
+        <button class="btn" (click)="execute()"
+            [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+            [disabled]="!form.valid && form.dirty>0">Execute</button>
+    </mat-dialog-actions>
 
 </div>

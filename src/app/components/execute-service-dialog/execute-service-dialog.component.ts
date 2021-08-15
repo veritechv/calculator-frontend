@@ -17,6 +17,7 @@ export class ExecuteServiceDialogComponent implements OnInit {
   username:string = null;
   formParameters:any[] = [];
   form: FormGroup;
+  errorMessage:string = null;  
 
   constructor(private dialogRef: MatDialogRef<ExecuteServiceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any, private calculatorService:CalculatorService, ) { }
@@ -49,6 +50,7 @@ export class ExecuteServiceDialogComponent implements OnInit {
   public execute():void{
     //reset response
     this.serviceResponse = null;
+    this.errorMessage = null;
 
     let serviceRequest = new ServiceRequest();
     serviceRequest.username = this.username;
@@ -62,6 +64,8 @@ export class ExecuteServiceDialogComponent implements OnInit {
     this.calculatorService.execute(serviceRequest).subscribe(result=>{
       this.serviceResponse = result;
       this.form.reset();
+    }, err=>{
+      this.errorMessage = err.error['response'] || err.error;
     });
   }
 
