@@ -90,7 +90,7 @@ export class ServicesComponent implements OnInit {
   }
 
   public details(service: Service): void {
-    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, { 'data': { 'service': service, 'isEdit': false, 'isAdmin': false } });
+    let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, { 'data': { 'service': service, 'isEdit': false, 'isAdmin': this.isUserAdmin() } });
     detailsDialog.afterClosed().subscribe(result => {
       console.log(`this is the result ${result}`);
     });
@@ -99,27 +99,8 @@ export class ServicesComponent implements OnInit {
   public edit(service: Service): void {
     let detailsDialog = this.dialog.open(ServiceDetailsDialogComponent, { 'data': { 'service': service, 'isEdit': true, 'isAdmin': this.isUserAdmin() } });
     detailsDialog.afterClosed().subscribe(result => {
-      console.log(`this is the result ${result}`);
-    });
-  }
-
-  public delete(service: Service): void {
-    let confirmationDialog = this.dialog.open(ConfirmationDialogComponent, { data: { 'question': 'Are you sure you want to delete this service?' } });
-    confirmationDialog.afterClosed().subscribe(result => {
-      if (result === "true") {
-        this.servicesService.delete(service).subscribe(
-          deleteResult => {
-            let informationDialog = this.dialog.open(InformationDialogComponent, { data: { 'message': 'Service deleted successfully!' } });
-            this.loadList(0, this.pagingInfo.pageSize, '');
-          },
-          err => {
-            let informationDialog = this.dialog.open(InformationDialogComponent, {
-              data: {
-                'response':
-                  'The service couldn\'t be deleted. Please try again.\nIf the problem persist please contact the Administrator.'
-              }
-            });
-          });
+      if(result){
+        this.loadList(0, this.pagingInfo.pageSize, '');//refresh list to remove deleted item
       }
     });
   }

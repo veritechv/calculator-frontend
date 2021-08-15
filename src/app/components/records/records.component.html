@@ -19,6 +19,7 @@
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('serviceType')">Service type</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('username')">Requesting User</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('date')">Execution date</button></div></th>
+            <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button"(click)="sort('status')">Status</button></div></th>
             <th scope="col"><div class="d-grid gap-2"><button class="btn btn-link" type="button" >Action</button></div></th>
           </tr>
         </thead>
@@ -28,6 +29,7 @@
               <td><div class="text-center">{{record.serviceType | titlecase}}</div></td>
               <td><div class="text-center">{{record.username}}</div></td>
               <td><div class="text-center">{{record.date | date : 'medium'}}</div></td>
+              <td><div class="text-center">{{record.status}}</div></td>
               <td>
                 <div class="text-center">
                   <button class="btn btn-primary" type="button" (click)="details(record)">Details</button>

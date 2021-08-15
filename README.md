@@ -132,6 +132,8 @@ Of course for this to work properly we need also the backend project up and runn
 **Future work**
 - Implement tests (BIG FAIL)
 - Fix layout and looks
+- Disable Delete button for things already deleted.
+- Move Delete button into the user's details dialog.
 - Implement AppSettings service.
 - Get rid of the app-settings.json file. This could be replaced.
 

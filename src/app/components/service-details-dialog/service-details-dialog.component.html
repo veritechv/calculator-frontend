@@ -1,49 +1,89 @@
 <div class="container-lg">
-<h2 mat-dialog-title>{{service.name | titlecase}} Details</h2>
-    <form novalidate #f="ngForm" (ngSubmit)="submit()">
-        
-            <!-- uuid -->
-            <div class="mb-3">
-                <label class="form-label">UUID</label>
-                <input class="form-control" type="text" name="uuid" [ngModel]="service.uuid" disabled readonly>
+    <h2 mat-dialog-title>{{service.name | titlecase}} Details</h2>
+    <form novalidate [formGroup]="form">
+        <div class="form-group card-body">
+            <label class="form-label">UUID {{service.uuid}}</label>
+        </div>
+        <!-- uuid -->
+        <div class="form-group card-body">
+            <label class="form-label">Name</label>
+            <input class="form-control" type="text" formControlName="name"
+                [ngClass]="{'is-invalid':name.invalid && name.dirty,'is-valid':name.valid && name.dirty}"
+                [disabled]="!isEdit">
+            <div class="invalid-feedback" *ngIf="name.invalid && name.dirty">
+                Enter a name please
             </div>
-            <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input class="form-control" type="text" name="name" [ngModel]="service.name" disabled readonly>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Description</label>
-                <input class="form-control" type="text" name="description" [ngModel]="service.description" disabled readonly>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Type</label>
-                <input class="form-control" type="text" name="type" [ngModel]="service.type" disabled readonly>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Execution cost</label>
-                <input class="form-control" type="text" name="cost" [(ngModel)]="service.cost" 
-                    required minlength="1" maxlength="3" pattern="/^\d+/" >
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Number of parameters needed for execution</label>
-                <input class="form-control" type="text" name="numParameters" [ngModel]="service.numParameters" disabled readonly>
-            </div>            
-            <div class="mb-3 form-check form-switch">
-                <label class="form-check-label">Active</label>
-                <input class="form-check-input" type="checkbox" name="active" [(ngModel)]="service.status" >
-            </div>
-                
-            <!-- Submit -->
-            <div *ngIf="isEdit && isAdmin" class="button-wrapper">
-                <button type="submit" color="primary">Update</button>
-            </div>
+        </div>
+        <div class="form-group card-body">
+            <label class="form-label">Description</label>
+            <input class="form-control" type="text" formControlName="desc" [disabled]="!isEdit">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">Type</label>
+                    <select class="form-control" formControlName="type"
+                        [ngClass]="{'is-invalid': (type.invalid && type.dirty),'is-valid':(type.valid && type.dirty)}"
+                        [disabled]="!isEdit">
+                        <option value="" selected disabled hidden>Please select a type</option>
+                        <option *ngFor="let type of types" [value]="type">
+                            {{type | titlecase}}
+                        </option>
+                    </select>
+                </div>
 
-  
-      </form>
-<!--/mat-dialog-content-->
+                <div class="col">
+                    <label class="form-label">Status</label>
+                    <select class="form-control" formControlName="status"
+                        [ngClass]="{'is-invalid': (status.invalid && status.dirty),'is-valid':(status.valid && status.dirty)}"
+                        [disabled]="!isEdit">
+                        <option value="" selected disabled hidden>Please select a status</option>
+                        <option *ngFor="let status of statuses" [value]="status">
+                            {{status | titlecase}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">Number of parameters</label>
+                    <input class="form-control" type="text" formControlName="numParams"
+                        [ngClass]="{'is-invalid':numParams.invalid && numParams.dirty,'is-valid':numParams.valid && numParams.dirty}"
+                        [disabled]="!isEdit">
+                    <div class="invalid-feedback" *ngIf="numParams.invalid && numParams.dirty">
+                        Only positive numbers please
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="form-label">Execution cost</label>
+                    <input class="form-control" type="text" formControlName="cost"
+                        [ngClass]="{'is-invalid':cost.invalid && cost.dirty,'is-valid':cost.valid && cost.dirty}"
+                        [disabled]="!isEdit">
+                    <div class="invalid-feedback" *ngIf="cost.invalid && cost.dirty">
+                        Only positive numbers please
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--/mat-dialog-content-->
+
 </div>
+<div class="alert alert-danger" *ngIf="errorMessage!=null">
+    {{errorMessage}}
+</div>
+
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMessage!=null ">
+    {{successMessage}}
+</div>
+
 <div class="text-center">
     <mat-dialog-actions>
-        <button class="btn btn-primary" mat-button mat-dialog-close>Ok</button>
+        <button class="btn btn-primary" (click)="close()">Close</button>
+        <button *ngIf="isAdmin && !isEdit" class="btn btn-danger" (click)="delete()">Delete</button>
+        <button *ngIf="isAdmin && isEdit" class="btn" (click)="update()"
+            [ngClass]="{'btn-primary':form.valid && form.dirty, 'btn-outline-primary':!form.valid && !form.dirty}"
+            [disabled]="!form.valid && !form.dirty">Update</button>
     </mat-dialog-actions>
 </div>

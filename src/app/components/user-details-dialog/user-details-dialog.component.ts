@@ -55,6 +55,7 @@ export class UserDetailsDialogComponent implements OnInit {
     this.usersService.update(this.user).subscribe(result => {
       this.saveMessage = 'User updated successfully!'
       this.wasSaveSuccessful = true;
+      this.form.markAsPristine();
     }, err => {
       this.saveMessage = err.error;
       this.wasSaveSuccessful = false;

@@ -66,11 +66,11 @@ export class RecordsComponent implements OnInit {
   }
 
   public details(record:Record):void{
-    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': false} });
+    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': false, 'isAdmin': this.loggedUser.isAdmin()} });
   }
 
   public edit(record:Record):void{
-    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': true} });
+    this.dialog.open(RecordDetailsDialogComponent, { 'data': { 'record': record, 'isEdit': true, 'isAdmin': this.loggedUser.isAdmin()} });
   }
 
   /*
